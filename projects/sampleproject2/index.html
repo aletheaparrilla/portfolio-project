@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Registration Form</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<h2>My Personal Information</h2>
+<h4><i> Greetings, Fellow Nationalians! 💗🌟 Kindly fill out this form to register your profile! </i></h4>
+
+<form id="registrationForm">
+
+<label for="name">Full Name:</label>
+<input type="text" id="name" name="name" required />
+
+<label for="email">Email Address:</label>
+<input type="email" id="email" name="email" required />
+
+<label for="password">Password:</label>
+<input type="password" id="password" name="pass" required minlength="6" />
+
+<label for="phone">Phone Number:</label>
+<input type="number" id="phone" name="phone" required />
+
+<label>Gender:</label>
+<input type="radio" id="male" name="gender" value="male" />
+
+<label for="male" style="display:inline">Male</label>
+<input type="radio" id="female" name="gender" value="female" />
+<label for="female" style="display:inline">Female</label>
+
+<label for="date">Birthday:</label>
+<input type="date" id="date" name="dob" required />
+
+<label for="course">Course/Program:</label> 
+<select id="course" name="course" required>
+<option value="" disabled selected>Select your Course/Program</option>
+<option value="it">Information Technology</option>
+<option value="medt">Medical Technology</option>
+<option value="bm">Business Administration</option>
+<option value="ar">Architecture</option>
+<option value="nr">Nursing</option>
+</select>
+
+<label for="terms">
+  <input type="checkbox" id="terms" name="terms" />
+By registering, you agree to provide accurate and truthful information. Your personal data will be used solely for registration purposes and will be handled according to our privacy policy. You agree not to misuse the service and to comply with all applicable laws and regulations. We reserve the right to suspend or terminate accounts that violate these terms.
+I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a>
+</label>
+
+<button type="submit">Submit</button>
+</form>
+<script>
+
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function(event) {
+
+      event.preventDefault();
+
+      const errorMessages = form.querySelectorAll('.error');
+
+      errorMessages.forEach(e => e.remove());
+
+      let valid = true;
+
+      const name = form.name.value.trim();
+
+      if (name === '') {
+
+        showError(form.name, 'This field is required');
+
+        valid = false;
+
+      }
+
+      const email = form.email.value.trim();
+
+      if (email === '') {
+
+        showError(form.email, 'This field is required');
+
+        valid = false;
+
+      }
+
+      const password = form.password.value.trim();
+
+      if (password === '') {
+
+        showError(form.password, 'This field is required');
+
+        valid = false;
+
+      }
+
+      const genderRadios = form.gender;
+
+      let genderSelected = false;
+
+      for (let radio of genderRadios) {
+
+        if (radio.checked) {
+
+          genderSelected = true;
+
+          break;
+
+        }
+
+      }
+
+      if (!genderSelected) {
+
+        showError(form.querySelector('input[name="gender"]:last-of-type'), 'Please select a gender');
+
+        valid = false;
+
+      }
+
+      const course = form.course.value;
+
+      if (!course) {
+
+        showError(form.course, 'Select your course');
+
+        valid = false;
+
+      }
+
+      const terms = form.terms.checked;
+      
+      if (!terms) {
+        
+        showError(form.terms, 'You must agree to the Terms and Conditions');
+        
+        valid = false;
+      
+      }
+
+      if (valid) {
+
+        alert('You have registered successfully!');
+
+        form.reset();
+
+      }
+
+    });
+
+    function showError(element, message) {
+
+      const error = document.createElement('div');
+
+      error.className = 'error';
+
+      error.textContent = message;
+
+      element.insertAdjacentElement('afterend', error);
+    }
+</script>
+</body>
+</html>
+ 
